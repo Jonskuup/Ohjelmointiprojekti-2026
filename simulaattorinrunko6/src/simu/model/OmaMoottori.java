@@ -10,6 +10,8 @@ public class OmaMoottori extends Moottori{
 
 	private Palvelupiste[] palvelupisteet;
 
+	private double basicPesuOsuus; // Käyttäjän valitsema määrä autoja Basic pesuun
+
 	public OmaMoottori(){
 
 		palvelupisteet = new Palvelupiste[3];
@@ -20,6 +22,11 @@ public class OmaMoottori extends Moottori{
 
 		saapumisprosessi = new Saapumisprosessi(new Negexp(15,5), tapahtumalista, TapahtumanTyyppi.ARR1);
 
+	}
+
+	// Metodi asettamaan käyttäjän valitseman Basic pesun osuuden
+	public void setbasicPesuOsuus(double basicPesuOsuus) {
+		this.basicPesuOsuus = basicPesuOsuus;
 	}
 
 
@@ -38,8 +45,12 @@ public class OmaMoottori extends Moottori{
 				       saapumisprosessi.generoiSeuraava();
 				break;
 			case PALVELUPISTE_VALMIS: a = (Asiakas)palvelupisteet[0].otaJonosta();
-			// Valinta meneekö auto basic vai premium pesuun
-				   	   // päätös kumpaan palvelupisteeseen 1 tai 2?? palvelupisteet[1].lisaaJonoon(a);
+				// Valinta meneekö auto basic vai premium pesuun (käyttäjä päättää myöhemmin?)
+				if (Math.random() < basicPesuOsuus) {
+					palvelupisteet[1].lisaaJonoon(a);
+				} else {
+					palvelupisteet[2].lisaaJonoon(a);
+				}
 				break;
 			case BASIC_VALMIS: a = (Asiakas)palvelupisteet[1].otaJonosta();
 				   	   palvelupisteet[4].lisaaJonoon(a);
