@@ -37,14 +37,21 @@ public class OmaMoottori extends Moottori{
 			case ARR1: palvelupisteet[0].lisaaJonoon(new Asiakas());
 				       saapumisprosessi.generoiSeuraava();
 				break;
-			case DEP1: a = (Asiakas)palvelupisteet[0].otaJonosta();
-				   	   palvelupisteet[1].lisaaJonoon(a);
+			case PALVELUPISTE_VALMIS: a = (Asiakas)palvelupisteet[0].otaJonosta();
+			// Valinta meneekö auto basic vai premium pesuun
+				   	   // päätös kumpaan palvelupisteeseen 1 tai 2?? palvelupisteet[1].lisaaJonoon(a);
 				break;
-			case DEP2: a = (Asiakas)palvelupisteet[1].otaJonosta();
-				   	   palvelupisteet[2].lisaaJonoon(a);
+			case BASIC_VALMIS: a = (Asiakas)palvelupisteet[1].otaJonosta();
+				   	   palvelupisteet[4].lisaaJonoon(a);
 				break;
-			case DEP3:
-				       a = (Asiakas)palvelupisteet[2].otaJonosta();
+			case PREMIUM_VALMIS: a = (Asiakas)palvelupisteet[2].otaJonosta();
+				palvelupisteet[3].lisaaJonoon(a);
+				break;
+			case VAHAUS_VALMIS: a = (Asiakas)palvelupisteet[3].otaJonosta();
+				palvelupisteet[4].lisaaJonoon(a);
+				break;
+			case KUIVAUS_VALMIS:
+				       a = (Asiakas)palvelupisteet[4].otaJonosta();
 					   a.setPoistumisaika(Kello.getInstance().getAika());
 			           a.raportti();
 		}
