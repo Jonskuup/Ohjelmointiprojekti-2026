@@ -1,19 +1,22 @@
 package simu.framework;
 
-public class Tapahtuma implements Comparable<Tapahtuma> {
+import simu.model.TapahtumanTyyppi;
 
-	private ITapahtumanTyyppi tyyppi;
+public class Tapahtuma implements Comparable<Tapahtuma> {
+	
+		
+	private TapahtumanTyyppi tyyppi;
 	private double aika;
 	
-	public Tapahtuma(ITapahtumanTyyppi tyyppi, double aika){
+	public Tapahtuma(TapahtumanTyyppi tyyppi, double aika){
 		this.tyyppi = tyyppi;
 		this.aika = aika;
 	}
 	
-	public void setTyyppi(ITapahtumanTyyppi tyyppi) {
+	public void setTyyppi(TapahtumanTyyppi tyyppi) {
 		this.tyyppi = tyyppi;
 	}
-	public ITapahtumanTyyppi getTyyppi() {
+	public TapahtumanTyyppi getTyyppi() {
 		return tyyppi;
 	}
 	public void setAika(double aika) {
@@ -29,5 +32,8 @@ public class Tapahtuma implements Comparable<Tapahtuma> {
 		else if (this.aika > arg.aika) return 1;
 		return 0;
 	}
+	
+	
+	
 
 }
