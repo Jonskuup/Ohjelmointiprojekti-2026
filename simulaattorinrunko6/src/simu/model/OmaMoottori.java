@@ -40,6 +40,7 @@ public class OmaMoottori extends Moottori{
 
 			case ARR1: palvelupisteet[0].lisaaJonoon(new Asiakas());
 				       saapumisprosessi.generoiSeuraava();
+					   kontrolleri.visualisoiAsiakas();
 				break;
 			case PALVELUPISTE_VALMIS: a = (Asiakas)palvelupisteet[0].otaJonosta();
 				if (a.onPremium()) {
@@ -96,6 +97,8 @@ public class OmaMoottori extends Moottori{
 		System.out.println("\nKuivaus pisteen tulokset: ");
 		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[4].getPalvellutAsiakkaat()));
 		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[4].getAktiivinenAika()));
+
+		kontrolleri.naytaLoppuaika(Kello.getInstance().getAika());
 	}
 
 	
