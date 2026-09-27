@@ -1,5 +1,6 @@
 package simu.model;
 
+import controller.IKontrolleriForM;
 import simu.framework.*;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
@@ -10,7 +11,9 @@ public class OmaMoottori extends Moottori{
 
 	private Palvelupiste[] palvelupisteet;
 
-	public OmaMoottori(){
+	public OmaMoottori(IKontrolleriForM kontrolleri){
+
+		super(kontrolleri);
 
 		palvelupisteet = new Palvelupiste[5];
 
