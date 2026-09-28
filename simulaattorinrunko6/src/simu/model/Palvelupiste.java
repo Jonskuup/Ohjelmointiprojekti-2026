@@ -18,6 +18,7 @@ public class Palvelupiste {
 	private boolean varattu = false;
 	private int palvellutAsiakkaat = 0;
 	private double aktiivinenAika = 0;
+	private int maksimiJonopituus = 0;
 
 	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi) {
 		this.tapahtumalista = tapahtumalista;
@@ -29,6 +30,9 @@ public class Palvelupiste {
 
 	public void lisaaJonoon(Asiakas a) {   // Jonon 1. asiakas aina palvelussa
 		jono.add(a);
+		if (jono.size() > maksimiJonopituus) {
+			maksimiJonopituus = jono.size();
+		}
 
 	}
 
@@ -67,6 +71,24 @@ public class Palvelupiste {
 
 	public double getAktiivinenAika() {
 		return aktiivinenAika;
+	}
+
+	public int getMaksimiJonopituus() {
+		return maksimiJonopituus;
+	}
+
+	public double getKeskimääräinenPalveluaika(){
+		if (palvellutAsiakkaat == 0) return 0;
+		return aktiivinenAika / palvellutAsiakkaat;
+	}
+
+	public void raportti() {
+		Trace.out(Trace.Level.INFO, "--- Palvelupiste raportti ---");
+		Trace.out(Trace.Level.INFO, "Palvellut asiakkaat" + palvellutAsiakkaat);
+		Trace.out(Trace.Level.INFO, "Aktiivinen aika yhteensä" + aktiivinenAika);
+		Trace.out(Trace.Level.INFO, "Maksimi jononpituus" +  maksimiJonopituus);
+		Trace.out(Trace.Level.INFO, "Keskimääräinen palveluaika" + getKeskimääräinenPalveluaika());
+
 	}
 }
 
