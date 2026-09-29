@@ -80,7 +80,7 @@ public class OmaMoottori extends Moottori{
 
 		String[] nimet = {"Vastaanotto", "Basic pesu", "Premium pesu", "Vahaus", "Kuivaus"};
 
-		// 1. Kerätään tarvittava data analyysiä varten
+		// Kerätään dataa analyysiä varten
 		int saapuneet = palvelupisteet[0].getPalvellutAsiakkaat(); // Vastaanotetut autot
 		int valmiit = palvelupisteet[4].getPalvellutAsiakkaat();   // Kuivauksesta valmistuneet autot
 		int kesken = saapuneet - valmiit; // Kuinka moni jäi vielä pesulaan sisälle
@@ -94,7 +94,7 @@ public class OmaMoottori extends Moottori{
 			}
 		}
 
-		// 2. Kirjoitetaan helposti luettava raportti
+		// Kirjoitetaan helposti luettava raportti
 		StringBuilder raportti = new StringBuilder();
 
 		raportti.append("YHTEENVETO:\n");
