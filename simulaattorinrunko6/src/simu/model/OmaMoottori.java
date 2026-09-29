@@ -78,18 +78,56 @@ public class OmaMoottori extends Moottori{
 	protected void tulokset() {
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
 
-		// Kootaan raportin teksti erillistä ikkunaa varten
-		StringBuilder raportti = new StringBuilder();
-		raportti.append("=== SIMULAATION LOPPURAPORTTI ===\n\n");
-		raportti.append("Kokonaisaika: ").append(String.format("%.2f", Kello.getInstance().getAika())).append("\n\n");
-
 		String[] nimet = {"Vastaanotto", "Basic pesu", "Premium pesu", "Vahaus", "Kuivaus"};
+
+		// 1. Kerätään tarvittava data analyysiä varten
+		int saapuneet = palvelupisteet[0].getPalvellutAsiakkaat(); // Vastaanotetut autot
+		int valmiit = palvelupisteet[4].getPalvellutAsiakkaat();   // Kuivauksesta valmistuneet autot
+		int kesken = saapuneet - valmiit; // Kuinka moni jäi vielä pesulaan sisälle
+
+		int maxJono = 0;
+		String pullonkaula = "";
+		for (int i = 0; i < palvelupisteet.length; i++) {
+			if (palvelupisteet[i].getMaksimiJonopituus() > maxJono) {
+				maxJono = palvelupisteet[i].getMaksimiJonopituus();
+				pullonkaula = nimet[i];
+			}
+		}
+
+		// 2. Kirjoitetaan helposti luettava raportti
+		StringBuilder raportti = new StringBuilder();
+
+		raportti.append("YHTEENVETO:\n");
+		raportti.append("- Simulaation kesto: ").append(String.format("%.2f", Kello.getInstance().getAika())).append(" minuuttia.\n");
+		raportti.append("- Järjestelmään saapui: ").append(saapuneet).append(" asiakasta.\n");
+		raportti.append("- Kokonaan palvellut: ").append(valmiit).append(" asiakasta.\n\n");
+
+		raportti.append("SUORITUSKYKYANALYYSI (Miten asiat vaikuttivat):\n");
+
+		// Analysoidaan kapasiteettia
+		if (kesken > 0) {
+			raportti.append("- Simulaation päättyessä järjestelmään jäi keskeneräisiä asiakkaita ").append(kesken).append(" kpl. ");
+			raportti.append("Tämä tarkoittaa, että asiakkaita saapui ruuhkaisemmin kuin pesulan kapasiteetti ehti heitä käsitellä. ");
+			raportti.append("Tuloksena osa autoista ei ehtinyt valmistua ajallaan.\n\n");
+		} else {
+			raportti.append("- Kaikki järjestelmään saapuneet asiakkaat ehdittiin palvella. Pesulan kapasiteetti oli täysin riittävä saapumismäärään nähden.\n\n");
+		}
+
+		// Analysoidaan pullonkauloja
+		if (maxJono > 0) {
+			raportti.append("- Järjestelmän merkittävin pullonkaula oli '").append(pullonkaula).append("', ");
+			raportti.append("jonne kertyi pahimmillaan ").append(maxJono).append(" asiakkaan jono. ");
+			raportti.append("Tämä piste rajoitti muiden pisteiden toimintaa ja pidensi suoraan asiakkaiden kokonaisläpimenoaikaa.\n\n");
+		} else {
+			raportti.append("- Jonoja ei päässyt syntymään yhdellekään pisteelle, eli toiminta oli erittäin sujuvaa ja asiakkaat liikkuivat pisteeltä toiselle odottamatta.\n\n");
+		}
+
+		raportti.append("PALVELUPISTEIDEN TARKAT TILASTOT:\n");
 		for (int i = 0; i < palvelupisteet.length; i++) {
 			raportti.append(nimet[i]).append(":\n");
-			raportti.append(" - Palvellut autot: ").append(palvelupisteet[i].getPalvellutAsiakkaat()).append("\n");
-			raportti.append(" - Aktiivinen aika: ").append(String.format("%.2f", palvelupisteet[i].getAktiivinenAika())).append("\n");
-			raportti.append(" - Maksimijono: ").append(palvelupisteet[i].getMaksimiJonopituus()).append("\n");
-			raportti.append(" - Ka. palveluaika: ").append(String.format("%.2f", palvelupisteet[i].getKeskimääräinenPalveluaika())).append("\n\n");
+			raportti.append("  Palvellut: ").append(palvelupisteet[i].getPalvellutAsiakkaat());
+			raportti.append(" | Maksimijono: ").append(palvelupisteet[i].getMaksimiJonopituus());
+			raportti.append(" | Ka. palveluaika: ").append(String.format("%.2f", palvelupisteet[i].getKeskimääräinenPalveluaika())).append("\n");
 		}
 
 		kontrolleri.naytaLoppuaika(Kello.getInstance().getAika());
