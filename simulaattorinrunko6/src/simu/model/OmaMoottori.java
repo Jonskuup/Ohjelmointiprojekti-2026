@@ -78,27 +78,22 @@ public class OmaMoottori extends Moottori{
 	protected void tulokset() {
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
 
-		System.out.println("\nPalvelupisteiden tulokset: ");
-		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[0].getPalvellutAsiakkaat()));
-		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[0].getAktiivinenAika()));
+		// Kootaan raportin teksti erillistä ikkunaa varten
+		StringBuilder raportti = new StringBuilder();
+		raportti.append("=== SIMULAATION LOPPURAPORTTI ===\n\n");
+		raportti.append("Kokonaisaika: ").append(String.format("%.2f", Kello.getInstance().getAika())).append("\n\n");
 
-		System.out.println("\nBasic pesun tulokset: ");
-		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[1].getPalvellutAsiakkaat()));
-		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[1].getAktiivinenAika()));
-
-		System.out.println("\nPremium pesun tulokset: ");
-		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[2].getPalvellutAsiakkaat()));
-		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[2].getAktiivinenAika()));
-
-		System.out.println("\nVahaus pisteen tulokset: ");
-		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[3].getPalvellutAsiakkaat()));
-		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[3].getAktiivinenAika()));
-
-		System.out.println("\nKuivaus pisteen tulokset: ");
-		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[4].getPalvellutAsiakkaat()));
-		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[4].getAktiivinenAika()));
+		String[] nimet = {"Vastaanotto", "Basic pesu", "Premium pesu", "Vahaus", "Kuivaus"};
+		for (int i = 0; i < palvelupisteet.length; i++) {
+			raportti.append(nimet[i]).append(":\n");
+			raportti.append(" - Palvellut autot: ").append(palvelupisteet[i].getPalvellutAsiakkaat()).append("\n");
+			raportti.append(" - Aktiivinen aika: ").append(String.format("%.2f", palvelupisteet[i].getAktiivinenAika())).append("\n");
+			raportti.append(" - Maksimijono: ").append(palvelupisteet[i].getMaksimiJonopituus()).append("\n");
+			raportti.append(" - Ka. palveluaika: ").append(String.format("%.2f", palvelupisteet[i].getKeskimääräinenPalveluaika())).append("\n\n");
+		}
 
 		kontrolleri.naytaLoppuaika(Kello.getInstance().getAika());
+		kontrolleri.naytaLoppuraportti(raportti.toString());
 	}
 
 	
