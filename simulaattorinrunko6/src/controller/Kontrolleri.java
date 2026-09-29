@@ -50,14 +50,18 @@ public class Kontrolleri implements IKontrolleriForM, IKontrolleriForV{   // UUS
 
 	
 	@Override
-	public void visualisoiAsiakas() {
+	public void visualisoiAsiakas(String vaihe) {
 		Platform.runLater(new Runnable(){
 			public void run(){
-				ui.getVisualisointi().uusiAsiakas();
+
+				//jos vaihe alkaa merkkijonolla "poistu_", niin asiakas poistetaan, muuten lisätään uusi asiakas
+				if(vaihe.startsWith("poistu_")) {
+					ui.getVisualisointi().poistaAsiakas(vaihe);
+				}
+				else  {
+					ui.getVisualisointi().uusiAsiakas(vaihe);
+				}
 			}
 		});
 	}
-
-
-
 }
