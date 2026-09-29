@@ -40,26 +40,36 @@ public class OmaMoottori extends Moottori{
 
 			case ARR1: palvelupisteet[0].lisaaJonoon(new Asiakas());
 				       saapumisprosessi.generoiSeuraava();
-					   kontrolleri.visualisoiAsiakas();
+					   kontrolleri.visualisoiAsiakas("saapuminen");
 				break;
 			case PALVELUPISTE_VALMIS: a = (Asiakas)palvelupisteet[0].otaJonosta();
+				kontrolleri.visualisoiAsiakas("poistu_saapuminen");
 				if (a.onPremium()) {
 					palvelupisteet[2].lisaaJonoon(a);
+					kontrolleri.visualisoiAsiakas("premium");
 				} else {
 					palvelupisteet[1].lisaaJonoon(a);
+					kontrolleri.visualisoiAsiakas("basic");
 				}
 				break;
 			case BASIC_VALMIS: a = (Asiakas)palvelupisteet[1].otaJonosta();
-				   	   palvelupisteet[4].lisaaJonoon(a);
+				kontrolleri.visualisoiAsiakas("poistu_basic"); //poistu basicista
+				palvelupisteet[4].lisaaJonoon(a);
+				kontrolleri.visualisoiAsiakas("kuivaus"); //mene kuivaukseen
 				break;
 			case PREMIUM_VALMIS: a = (Asiakas)palvelupisteet[2].otaJonosta();
+				kontrolleri.visualisoiAsiakas("poistu_premium");
 				palvelupisteet[3].lisaaJonoon(a);
+				kontrolleri.visualisoiAsiakas("vahaus");
 				break;
 			case VAHAUS_VALMIS: a = (Asiakas)palvelupisteet[3].otaJonosta();
+				kontrolleri.visualisoiAsiakas("poistu_vahaus");
 				palvelupisteet[4].lisaaJonoon(a);
+				kontrolleri.visualisoiAsiakas("kuivaus");
 				break;
 			case KUIVAUS_VALMIS:
 				       a = (Asiakas)palvelupisteet[4].otaJonosta();
+					   kontrolleri.visualisoiAsiakas("poistu_kuivaus");
 					   a.setPoistumisaika(Kello.getInstance().getAika());
 			           a.raportti();
 		}
