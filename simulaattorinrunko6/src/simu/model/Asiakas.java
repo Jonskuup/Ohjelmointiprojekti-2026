@@ -17,8 +17,9 @@ public class Asiakas {
 	private int id;
 	private PesuTyyppi pesuTyyppi;
 	private static int i = 1;
-	private static long sum = 0;
-	private static final Bernoulli pesuvalintaGeneraattori = new Bernoulli(0.4);
+	private static double lapimenoaikojenSUmma = 0;
+	private static int valmistuneetAsiakkaat = 0;
+	private static Bernoulli pesuvalintaGeneraattori = new Bernoulli(0.4);
 	
 	public Asiakas(){
 	    id = i++;
@@ -62,6 +63,11 @@ public class Asiakas {
 	public boolean onPremium() {
 		return pesuTyyppi == PesuTyyppi.PREMIUM;
 	}
+
+	// Asiakas voi vaihtaa premium todennäköisyyttä
+	public static void setPremiumOsuus(double premiumOsuus, long seed) {
+		pesuvalintaGeneraattori = new Bernoulli(premiumOsuus, seed);
+	}
 	
 	public void raportti(){
 		Trace.out(Trace.Level.INFO, "\nAsiakas "+id+ " valmis! ");
@@ -69,9 +75,31 @@ public class Asiakas {
 		Trace.out(Trace.Level.INFO, "Asiakas "+id+ " saapui: " +saapumisaika);
 		Trace.out(Trace.Level.INFO,"Asiakas "+id+ " poistui: " +poistumisaika);
 		Trace.out(Trace.Level.INFO,"Asiakas "+id+ " viipyi: " +(poistumisaika-saapumisaika));
-		sum += (poistumisaika-saapumisaika);
-		double keskiarvo = sum/id;
+		double lapimenoaika = poistumisaika - saapumisaika;
+		lapimenoaikojenSUmma += lapimenoaika;
+		valmistuneetAsiakkaat++;
+		double keskiarvo = lapimenoaikojenSUmma / valmistuneetAsiakkaat;
 		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti "+ keskiarvo);
+	}
+
+	// palauttaa simulaatiossa valmistuneiden asiakkaiden määrän
+	public static int getValmistuneetAsiakkaat() {
+		return valmistuneetAsiakkaat;
+	}
+
+	// palauttaa valmistuneiden asiakkaiden keskimääräisen läpimenoajan
+	public static double getKeskimaarainenLapimenoaika() {
+		if (valmistuneetAsiakkaat == 0) {
+			return 0;
+		}
+		return lapimenoaikojenSUmma / valmistuneetAsiakkaat;
+	}
+
+	// nollaa asiakkaiden yhteiset tilastot uutta simulointia varten
+	public static void nollaaTilastot() {
+		lapimenoaikojenSUmma = 0;
+		valmistuneetAsiakkaat = 0;
+		i = 1; // asiakkaiden ID alkaa ykkösestä
 	}
 
 }

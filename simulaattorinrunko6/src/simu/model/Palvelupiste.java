@@ -30,8 +30,12 @@ public class Palvelupiste {
 
 	public void lisaaJonoon(Asiakas a) {   // Jonon 1. asiakas aina palvelussa
 		jono.add(a);
-		if (jono.size() > maksimiJonopituus) {
-			maksimiJonopituus = jono.size();
+		int jonottavienMaara = jono.size();
+		if (varattu) {
+			jonottavienMaara--;
+		}
+		if (jonottavienMaara > maksimiJonopituus) {
+			maksimiJonopituus = jonottavienMaara;
 		}
 
 	}
@@ -39,6 +43,7 @@ public class Palvelupiste {
 
 	public Asiakas otaJonosta() {  // Poistetaan palvelussa ollut
 		varattu = false;
+		palvellutAsiakkaat++;
 		return jono.poll();
 	}
 
@@ -50,7 +55,6 @@ public class Palvelupiste {
 		varattu = true;
 		double palveluaika = generator.sample();
 		aktiivinenAika += palveluaika;
-		palvellutAsiakkaat++;
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
 	}
 

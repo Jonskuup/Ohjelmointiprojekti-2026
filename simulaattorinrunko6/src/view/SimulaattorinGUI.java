@@ -29,9 +29,23 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
     // Käyttöliittymäkomponentit:
     private TextField aika;
     private TextField viive;
+    private TextField saapumisvali;
+    private TextField palvelupisteAika;
+    private TextField basicAika;
+    private TextField premiumAika;
+    private TextField vahausAika;
+    private TextField kuivausAika;
+    private TextField premiumOsuus;
     private Label tulos;
     private Label aikaLabel;
     private Label viiveLabel;
+    private Label saapumisvaliLabel;
+    private Label palvelupisteAikaLabel;
+    private Label basicAikaLabel;
+    private Label premiumAikaLabel;
+    private Label vahausAikaLabel;
+    private Label kuivausAikaLabel;
+    private Label premiumOsuusLabel;
     private Label tulosLabel;
 
     private Button kaynnistaButton;
@@ -95,6 +109,27 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
             viive.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             viive.setPrefWidth(150);
 
+            saapumisvaliLabel = new Label("Saapumisväli:");
+            saapumisvali = new TextField("Syötä saapumisväli");
+
+            palvelupisteAikaLabel = new Label("Palvelupisteen aika:");
+            palvelupisteAika = new TextField("Syötä palvelupisteen aika");
+
+            basicAikaLabel = new Label("Basic pesun aika:");
+            basicAika = new TextField("Syötä basic pesun aika");
+
+            premiumAikaLabel = new Label("Premium pesun aika:");
+            premiumAika = new TextField("Syötä premium pesun aika");
+
+            vahausAikaLabel = new Label("Vahausaika:");
+            vahausAika = new TextField("Syötä vahausaika");
+
+            kuivausAikaLabel = new Label("Kuivausaika:");
+            kuivausAika = new TextField("Syötä kuivausaika");
+
+            premiumOsuusLabel = new Label("Premium osuus (%):");
+            premiumOsuus = new TextField("Syötä prosentti premium pesuun menevistä");
+
             tulosLabel = new Label("Kokonaisaika:");
             tulosLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             tulos = new Label();
@@ -114,11 +149,25 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
             grid.add(aika, 1, 0);          // sarake, rivi
             grid.add(viiveLabel, 0, 1);      // sarake, rivi
             grid.add(viive, 1, 1);           // sarake, rivi
-            grid.add(tulosLabel, 0, 2);      // sarake, rivi
-            grid.add(tulos, 1, 2);           // sarake, rivi
-            grid.add(kaynnistaButton, 0, 3);  // sarake, rivi
-            grid.add(nopeutaButton, 0, 4);   // sarake, rivi
-            grid.add(hidastaButton, 1, 4);   // sarake, rivi
+            grid.add(saapumisvaliLabel, 0, 2);
+            grid.add(saapumisvali, 1, 2);
+            grid.add(palvelupisteAikaLabel, 0, 3);
+            grid.add(palvelupisteAika, 1, 3);
+            grid.add(basicAikaLabel, 0, 4);
+            grid.add(basicAika, 1, 4);
+            grid.add(premiumAikaLabel, 0, 5);
+            grid.add(premiumAika, 1, 5);
+            grid.add(vahausAikaLabel, 0, 6);
+            grid.add(vahausAika, 1, 6);
+            grid.add(kuivausAikaLabel, 0, 7);
+            grid.add(kuivausAika, 1, 7);
+            grid.add(premiumOsuusLabel, 0, 8);
+            grid.add(premiumOsuus, 1, 8);
+            grid.add(tulosLabel, 0, 9);      // sarake, rivi
+            grid.add(tulos, 1, 9);           // sarake, rivi
+            grid.add(kaynnistaButton, 0, 10);  // sarake, rivi
+            grid.add(nopeutaButton, 0, 11);   // sarake, rivi
+            grid.add(hidastaButton, 1, 11);   // sarake, rivi
 
             naytto = new Visualisointi(400, 200);
 
@@ -146,6 +195,41 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
     @Override
     public long getViive() {
         return Long.parseLong(viive.getText());
+    }
+
+    @Override
+    public double getSaapumisvali() {
+        return Double.parseDouble(saapumisvali.getText());
+    }
+
+    @Override
+    public double getPalvelupisteAika() {
+        return Double.parseDouble(palvelupisteAika.getText());
+    }
+
+    @Override
+    public double getBasicAika() {
+        return Double.parseDouble(basicAika.getText());
+    }
+
+    @Override
+    public double getPremiumAika() {
+        return Double.parseDouble(premiumAika.getText());
+    }
+
+    @Override
+    public double getVahausAika() {
+        return Double.parseDouble(vahausAika.getText());
+    }
+
+    @Override
+    public double getKuivausAika() {
+        return Double.parseDouble(kuivausAika.getText());
+    }
+
+    @Override
+    public double getPremiumOsuus() {
+        return Double.parseDouble(premiumOsuus.getText()) / 100.0;
     }
 
     @Override

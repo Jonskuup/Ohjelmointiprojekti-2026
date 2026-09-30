@@ -11,20 +11,25 @@ public class OmaMoottori extends Moottori{
 
 	private Palvelupiste[] palvelupisteet;
 
-	public OmaMoottori(IKontrolleriForM kontrolleri){
+	private final long seed = 5;
+
+	public OmaMoottori(IKontrolleriForM kontrolleri, double saapumisvali, double palvelupisteAika, double basicAika, double premiumAika, double vahausAika, double kuivausAika, double premiumOsuus) {
 
 		super(kontrolleri);
 
+		Asiakas.nollaaTilastot();
+
 		palvelupisteet = new Palvelupiste[5];
 
-		palvelupisteet[0]=new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.PALVELUPISTE_VALMIS);
-		palvelupisteet[1]=new Palvelupiste(new Normal(10,10), tapahtumalista, TapahtumanTyyppi.BASIC_VALMIS);
-		palvelupisteet[2]=new Palvelupiste(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.PREMIUM_VALMIS);
-		palvelupisteet[3]=new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.VAHAUS_VALMIS);
-		palvelupisteet[4]=new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.KUIVAUS_VALMIS);
+		palvelupisteet[0]=new Palvelupiste(new Normal(palvelupisteAika,6, seed), tapahtumalista, TapahtumanTyyppi.PALVELUPISTE_VALMIS);
+		palvelupisteet[1]=new Palvelupiste(new Normal(basicAika,10, seed + 1), tapahtumalista, TapahtumanTyyppi.BASIC_VALMIS);
+		palvelupisteet[2]=new Palvelupiste(new Normal(premiumAika,3, seed + 2), tapahtumalista, TapahtumanTyyppi.PREMIUM_VALMIS);
+		palvelupisteet[3]=new Palvelupiste(new Normal(vahausAika,6, seed + 3), tapahtumalista, TapahtumanTyyppi.VAHAUS_VALMIS);
+		palvelupisteet[4]=new Palvelupiste(new Normal(kuivausAika,6, seed + 4), tapahtumalista, TapahtumanTyyppi.KUIVAUS_VALMIS);
 
-		saapumisprosessi = new Saapumisprosessi(new Negexp(15,5), tapahtumalista, TapahtumanTyyppi.ARR1);
+		saapumisprosessi = new Saapumisprosessi(new Negexp(saapumisvali,seed + 5), tapahtumalista, TapahtumanTyyppi.ARR1);
 
+		Asiakas.setPremiumOsuus(premiumOsuus, seed +6);
 	}
 
 	@Override
@@ -81,22 +86,31 @@ public class OmaMoottori extends Moottori{
 		System.out.println("\nPalvelupisteiden tulokset: ");
 		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[0].getPalvellutAsiakkaat()));
 		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[0].getAktiivinenAika()));
+		System.out.println("Maksimi jononpituus: " + palvelupisteet[0].getMaksimiJonopituus());
 
 		System.out.println("\nBasic pesun tulokset: ");
 		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[1].getPalvellutAsiakkaat()));
 		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[1].getAktiivinenAika()));
+		System.out.println("Maksimi jononpituus: " + palvelupisteet[1].getMaksimiJonopituus());
 
 		System.out.println("\nPremium pesun tulokset: ");
 		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[2].getPalvellutAsiakkaat()));
 		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[2].getAktiivinenAika()));
+		System.out.println("Maksimi jononpituus: " + palvelupisteet[2].getMaksimiJonopituus());
 
 		System.out.println("\nVahaus pisteen tulokset: ");
 		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[3].getPalvellutAsiakkaat()));
 		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[3].getAktiivinenAika()));
+		System.out.println("Maksimi jononpituus: " + palvelupisteet[3].getMaksimiJonopituus());
 
 		System.out.println("\nKuivaus pisteen tulokset: ");
 		System.out.println("Palveltujen autojen määrä: " + (palvelupisteet[4].getPalvellutAsiakkaat()));
 		System.out.println("Palveluun käytetty aika yhteensä: " + (palvelupisteet[4].getAktiivinenAika()));
+		System.out.println("Maksimi jononpituus: " + palvelupisteet[4].getMaksimiJonopituus());
+
+		System.out.println("\nKoko simulaation tulokset: ");
+		System.out.println("Valmistuneiden autojen määrä: " + Asiakas.getValmistuneetAsiakkaat());
+		System.out.println("Keskimääräinen läpimenoaika: " + Asiakas.getKeskimaarainenLapimenoaika());
 
 		kontrolleri.naytaLoppuaika(Kello.getInstance().getAika());
 	}
