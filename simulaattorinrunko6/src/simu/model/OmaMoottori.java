@@ -4,12 +4,22 @@ import controller.IKontrolleriForM;
 import simu.framework.*;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
+import dao.SimulointiajoDao;
+import entity.Simulointiajo;
+import entity.AjonPalvelupiste;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OmaMoottori extends Moottori{
 	
 	private Saapumisprosessi saapumisprosessi;
 
 	private Palvelupiste[] palvelupisteet;
+
+	private double saapumisvali;
+	private double premiumOsuus;
+	private double [] palveluaikojenKa;
+	private double[] palveluajatHajonta = {6, 10, 3, 6, 6};
 
 	private final long seed = 5;
 
@@ -30,6 +40,10 @@ public class OmaMoottori extends Moottori{
 		saapumisprosessi = new Saapumisprosessi(new Negexp(saapumisvali,seed + 5), tapahtumalista, TapahtumanTyyppi.ARR1);
 
 		Asiakas.setPremiumOsuus(premiumOsuus, seed +6);
+
+		this.saapumisvali = saapumisvali;
+		this.premiumOsuus = premiumOsuus;
+		this.palveluaikojenKa = new double[]{palvelupisteAika, basicAika, premiumAika, vahausAika, kuivausAika};
 	}
 
 	@Override
@@ -111,6 +125,22 @@ public class OmaMoottori extends Moottori{
 		System.out.println("\nKoko simulaation tulokset: ");
 		System.out.println("Valmistuneiden autojen määrä: " + Asiakas.getValmistuneetAsiakkaat());
 		System.out.println("Keskimääräinen läpimenoaika: " + Asiakas.getKeskimaarainenLapimenoaika());
+
+		String[] nimet = {"Valinta", "Basic", "Premium", "Vahaus", "Kuivaus"};
+		List<AjonPalvelupiste> pisteet = new ArrayList<>();
+		int maksimiJonoKaikista = 0;
+		for (int k = 0; k < palvelupisteet.length; k++) {
+			Palvelupiste p = palvelupisteet[k];
+			pisteet.add(new AjonPalvelupiste(
+					nimet[k], palveluaikojenKa[k], palveluajatHajonta[k], p.getPalvellutAsiakkaat(), p.getAktiivinenAika(), p.getMaksimiJonopituus()));
+			maksimiJonoKaikista = Math.max(maksimiJonoKaikista, p.getMaksimiJonopituus());
+		}
+		Simulointiajo ajo = new Simulointiajo(
+				seed, saapumisvali, premiumOsuus, Kello.getInstance().getAika(),
+				Asiakas.getValmistuneetAsiakkaat(), maksimiJonoKaikista,
+				Asiakas.getKeskimaarainenLapimenoaika());
+
+			new SimulointiajoDao().persist(ajo, pisteet);
 
 		kontrolleri.naytaLoppuaika(Kello.getInstance().getAika());
 	}
