@@ -27,6 +27,7 @@ public class OmaMoottori extends Moottori{
 
 		super(kontrolleri);
 
+		Kello.getInstance().setAika(0);
 		Asiakas.nollaaTilastot();
 
 		palvelupisteet = new Palvelupiste[5];
