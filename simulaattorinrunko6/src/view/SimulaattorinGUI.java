@@ -39,6 +39,7 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
     private Label tulos;
     private Label aikaLabel;
     private Label viiveLabel;
+    private Label virheLabel;
     private Label saapumisvaliLabel;
     private Label palvelupisteAikaLabel;
     private Label basicAikaLabel;
@@ -84,8 +85,21 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
             kaynnistaButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    kontrolleri.kaynnistaSimulointi();
-                    kaynnistaButton.setDisable(true);
+                    try {
+                        double osuus = Double.parseDouble(premiumOsuus.getText());
+
+                        if (osuus < 0 || osuus > 100) {
+                            virheLabel.setText("Premium osuuden pitää olla 0-100%.");
+                        } else if (getAika() <= 0 || getViive() < 0 || getSaapumisvali() <= 0 || getPalvelupisteAika() <= 0 || getBasicAika() <= 0 || getPremiumAika() <= 0 || getVahausAika() <= 0 || getKuivausAika() <= 0) {
+                            virheLabel.setText("Aikojen pitää olla positiivisia.");
+                        } else {
+                            virheLabel.setText("");
+                            kontrolleri.kaynnistaSimulointi();
+                            kaynnistaButton.setDisable(true);
+                        }
+                    } catch (Exception e) {
+                        virheLabel.setText("Virheellinen syöte. Syötä vain numeroita.");
+                    }
                 }
             });
 
@@ -136,6 +150,8 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
             tulos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             tulos.setPrefWidth(150);
 
+            virheLabel = new Label();
+
             HBox hBox = new HBox();
             hBox.setPadding(new Insets(15, 12, 15, 12)); // marginaalit ylÃ¤, oikea, ala, vasen
             hBox.setSpacing(10);   // noodien välimatka 10 pikseliä
@@ -168,6 +184,7 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
             grid.add(kaynnistaButton, 0, 10);  // sarake, rivi
             grid.add(nopeutaButton, 0, 11);   // sarake, rivi
             grid.add(hidastaButton, 1, 11);   // sarake, rivi
+            grid.add(virheLabel, 0, 12, 2, 1);
 
             naytto = new Visualisointi(600, 300);
 
