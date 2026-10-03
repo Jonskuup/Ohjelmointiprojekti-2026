@@ -23,7 +23,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi{
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 	}
 	
-	public void uusiAsiakas() {
+	public void uusiAsiakas(String vaihe) {
 		
 		asiakasLkm++;
 		
@@ -34,6 +34,8 @@ public class Visualisointi2 extends Canvas implements IVisualisointi{
 		gc.fillText("Asiakas " + asiakasLkm, 100, 100);
 		
 	}
-	
 
+	public void poistaAsiakas(String vaihe) {
+
+	}
 }
