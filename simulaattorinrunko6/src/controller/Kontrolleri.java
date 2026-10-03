@@ -67,6 +67,34 @@ public class Kontrolleri implements IKontrolleriForM, IKontrolleriForV{   // UUS
 		});
 	}
 
+	@Override
+	public void naytaLoppuraportti(String raportti) {
+		javafx.application.Platform.runLater(() -> {
+			javafx.stage.Stage ikkuna = new javafx.stage.Stage();
+			ikkuna.setTitle("Simulaation tulokset");
 
+			// Luodaan erillinen otsikko, joka keskitetään aina
+			javafx.scene.control.Label otsikko = new javafx.scene.control.Label("AUTOPESULAN LOPPURAPORTTI");
+			otsikko.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 15px;");
+			otsikko.setMaxWidth(Double.MAX_VALUE);
+			otsikko.setAlignment(javafx.geometry.Pos.CENTER);
 
+			// Itse raporttiteksti
+			javafx.scene.control.TextArea alue = new javafx.scene.control.TextArea(raportti);
+			alue.setEditable(false);
+			alue.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14;");
+			alue.setWrapText(true);
+			// Asetetaan komponentit allekkain
+			javafx.scene.layout.VBox paneeli = new javafx.scene.layout.VBox();
+			paneeli.getChildren().addAll(otsikko, alue);
+
+			// Laitetaan tekstialue laajenemaan ikkunan koon mukana
+			javafx.scene.layout.VBox.setVgrow(alue, javafx.scene.layout.Priority.ALWAYS);
+
+			// Asetetaan ikkunan oletuskoko
+			javafx.scene.Scene scene = new javafx.scene.Scene(paneeli, 600, 500);
+			ikkuna.setScene(scene);
+			ikkuna.show();
+		});
+	}
 }
