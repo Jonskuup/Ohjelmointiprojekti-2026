@@ -27,7 +27,6 @@ public class Visualisointi extends Canvas implements IVisualisointi{
 	}
 
 	public void tyhjennaNaytto() {
-
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 
@@ -132,5 +131,15 @@ public class Visualisointi extends Canvas implements IVisualisointi{
 		for (int i = 0; i < kuivausMaara; i++) {
 			gc.drawImage(auto, 520 - i * 25, 125, 20, 14);
 		}
+	}
+
+	public void nollaaNaytto() {
+		saapuminenMaara = 0;
+		basicMaara = 0;
+		premiumMaara = 0;
+		vahausMaara = 0;
+		kuivausMaara = 0;
+
+		tyhjennaNaytto();
 	}
 }

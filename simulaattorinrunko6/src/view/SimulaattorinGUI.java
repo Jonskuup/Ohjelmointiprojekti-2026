@@ -95,6 +95,7 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
                             virheLabel.setText("Aikojen pitää olla positiivisia.");
                         } else {
                             virheLabel.setText("");
+                            ((Visualisointi) naytto).nollaaNaytto();
                             kontrolleri.kaynnistaSimulointi();
                             kaynnistaButton.setDisable(true);
                         }
@@ -119,31 +120,40 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
             palvelupisteOtsikko.setFont(Font.font("Tahoma", FontWeight.BOLD, 16));
 
             aikaLabel = new Label("Simulointiaika (min):");
-            aika = new TextField("Syötä aika");
+            aika = new TextField();
+            aika.setPromptText("Syötä aika");
 
             viiveLabel = new Label("Viive (ms):");
-            viive = new TextField("Syötä viive");
+            viive = new TextField();
+            viive.setPromptText("Syötä viive");
 
             saapumisvaliLabel = new Label("Saapumisväli (min):");
-            saapumisvali = new TextField("Syötä saapumisväli");
+            saapumisvali = new TextField();
+            saapumisvali.setPromptText("Syötä saapumisväli");
 
             premiumOsuusLabel = new Label("Premium osuus (%):");
-            premiumOsuus = new TextField("Syötä prosentti premium pesuun menevistä");
+            premiumOsuus = new TextField();
+            premiumOsuus.setPromptText("Syötä prosentti premium pesuun menevistä");
 
             palvelupisteAikaLabel = new Label("Palvelupisteen aika (min):");
-            palvelupisteAika = new TextField("Syötä palvelupisteen aika");
+            palvelupisteAika = new TextField();
+            palvelupisteAika.setPromptText("Syötä palvelupisteen aika");
 
             basicAikaLabel = new Label("Basic pesun aika (min):");
-            basicAika = new TextField("Syötä basic pesun aika");
+            basicAika = new TextField();
+            basicAika.setPromptText("Syötä basic pesun aika");;
 
             premiumAikaLabel = new Label("Premium pesun aika (min):");
-            premiumAika = new TextField("Syötä premium pesun aika");
+            premiumAika = new TextField();
+            premiumAika.setPromptText("Syötä premium pesun aika");
 
             vahausAikaLabel = new Label("Vahausaika (min):");
-            vahausAika = new TextField("Syötä vahausaika");
+            vahausAika = new TextField();
+            vahausAika.setPromptText("Syötä vahausaika");
 
             kuivausAikaLabel = new Label("Kuivausaika (min):");
-            kuivausAika = new TextField("Syötä kuivausaika");
+            kuivausAika = new TextField();
+            kuivausAika.setPromptText("Syötä kuivausaika");
 
             tulosLabel = new Label("KOKONAISAIKA:");
             tulosLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 16));
