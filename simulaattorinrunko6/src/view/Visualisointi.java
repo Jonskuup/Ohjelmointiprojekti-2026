@@ -34,31 +34,31 @@ public class Visualisointi extends Canvas implements IVisualisointi{
 		gc.setFill(Color.WHITE);
 		gc.fillRect(40, 90, 140, 100);
 		gc.setFill(Color.BLACK);
-		gc.fillText("SAAPUMINEN", 70, 80);
+		gc.fillText("SAAPUMINEN", 70, 120);
 
 		//basic
 		gc.setFill(Color.WHITE);
 		gc.fillRect(210, 50, 100, 70);
 		gc.setFill(Color.BLACK);
-		gc.fillText("BASIC", 245, 40);
+		gc.fillText("BASIC", 300, 80);
 
 		//premium
 		gc.setFill(Color.WHITE);
 		gc.fillRect(210, 180, 100, 70);
 		gc.setFill(Color.BLACK);
-		gc.fillText("PREMIUM", 235, 170);
+		gc.fillText("PREMIUM", 235, 210);
 
 		//vahaus
 		gc.setFill(Color.WHITE);
 		gc.fillRect(330, 180, 100, 70);
 		gc.setFill(Color.BLACK);
-		gc.fillText("VAHAUS", 355, 170);
+		gc.fillText("VAHAUS", 355, 210);
 
 		//kuivaus
 		gc.setFill(Color.WHITE);
 		gc.fillRect(450, 100, 100, 70);
 		gc.setFill(Color.BLACK);
-		gc.fillText("KUIVAUS", 475, 90);
+		gc.fillText("KUIVAUS", 475, 130);
 
 	}
 	
@@ -113,23 +113,23 @@ public class Visualisointi extends Canvas implements IVisualisointi{
 
 		//piirtää kaikki autot uudelleen, kun asiakas poistuu vaiheesta
 		for (int i = 0; i < saapuminenMaara; i++) {
-			gc.drawImage(auto, 150 - i * 25, 125, 20, 14);
+			gc.drawImage(auto, 145 - i * 25, 145, 20, 14);
 		}
 
 		for (int i = 0; i < basicMaara; i++) {
-			gc.drawImage(auto, 280 - i * 25, 75, 20, 14);
+			gc.drawImage(auto, 345 - i * 25, 105, 20, 14);
 		}
 
 		for (int i = 0; i < premiumMaara; i++) {
-			gc.drawImage(auto, 280 - i * 25, 205, 20, 14);
+			gc.drawImage(auto, 280 - i * 25, 235, 20, 14);
 		}
 
 		for (int i = 0; i < vahausMaara; i++) {
-			gc.drawImage(auto, 400 - i * 25, 205, 20, 14);
+			gc.drawImage(auto, 400 - i * 25, 235, 20, 14);
 		}
 
 		for (int i = 0; i < kuivausMaara; i++) {
-			gc.drawImage(auto, 520 - i * 25, 125, 20, 14);
+			gc.drawImage(auto, 520 - i * 25, 155, 20, 14);
 		}
 	}
 
