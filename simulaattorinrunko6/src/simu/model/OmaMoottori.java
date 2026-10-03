@@ -191,10 +191,11 @@ public class OmaMoottori extends Moottori{
 				Asiakas.getValmistuneetAsiakkaat(), maksimiJonoKaikista,
 				Asiakas.getKeskimaarainenLapimenoaika());
 
-			new SimulointiajoDao().persist(ajo, pisteet);
-
 		kontrolleri.naytaLoppuaika(Kello.getInstance().getAika());
 		kontrolleri.naytaLoppuraportti(raportti.toString());
+
+			new SimulointiajoDao().persist(ajo, pisteet);
+
 	}
 
 	
