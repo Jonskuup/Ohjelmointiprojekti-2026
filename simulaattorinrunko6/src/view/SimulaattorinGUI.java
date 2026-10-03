@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import simu.framework.Trace;
@@ -98,7 +99,7 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
                             kaynnistaButton.setDisable(true);
                         }
                     } catch (Exception e) {
-                        virheLabel.setText("Virheellinen syöte. Syötä vain numeroita.");
+                        virheLabel.setText("Virheellinen syöte! Syötä vain numeroita.");
                     }
                 }
             });
@@ -111,46 +112,48 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
             nopeutaButton.setText("Nopeuta");
             nopeutaButton.setOnAction(e -> kontrolleri.nopeuta());
 
-            aikaLabel = new Label("Simulointiaika:");
-            aikaLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            Label asetuksetOtsikko = new Label("SIMULAATION ASETUKSET:");
+            asetuksetOtsikko.setFont(Font.font("Tahoma", FontWeight.BOLD, 16));
+
+            Label palvelupisteOtsikko = new Label("PALVELUPISTEIDEN AJAT:");
+            palvelupisteOtsikko.setFont(Font.font("Tahoma", FontWeight.BOLD, 16));
+
+            aikaLabel = new Label("Simulointiaika (min):");
             aika = new TextField("Syötä aika");
-            aika.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            aika.setPrefWidth(150);
 
-            viiveLabel = new Label("Viive:");
-            viiveLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            viiveLabel = new Label("Viive (ms):");
             viive = new TextField("Syötä viive");
-            viive.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            viive.setPrefWidth(150);
 
-            saapumisvaliLabel = new Label("Saapumisväli:");
+            saapumisvaliLabel = new Label("Saapumisväli (min):");
             saapumisvali = new TextField("Syötä saapumisväli");
-
-            palvelupisteAikaLabel = new Label("Palvelupisteen aika:");
-            palvelupisteAika = new TextField("Syötä palvelupisteen aika");
-
-            basicAikaLabel = new Label("Basic pesun aika:");
-            basicAika = new TextField("Syötä basic pesun aika");
-
-            premiumAikaLabel = new Label("Premium pesun aika:");
-            premiumAika = new TextField("Syötä premium pesun aika");
-
-            vahausAikaLabel = new Label("Vahausaika:");
-            vahausAika = new TextField("Syötä vahausaika");
-
-            kuivausAikaLabel = new Label("Kuivausaika:");
-            kuivausAika = new TextField("Syötä kuivausaika");
 
             premiumOsuusLabel = new Label("Premium osuus (%):");
             premiumOsuus = new TextField("Syötä prosentti premium pesuun menevistä");
 
-            tulosLabel = new Label("Kokonaisaika:");
-            tulosLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            palvelupisteAikaLabel = new Label("Palvelupisteen aika (min):");
+            palvelupisteAika = new TextField("Syötä palvelupisteen aika");
+
+            basicAikaLabel = new Label("Basic pesun aika (min):");
+            basicAika = new TextField("Syötä basic pesun aika");
+
+            premiumAikaLabel = new Label("Premium pesun aika (min):");
+            premiumAika = new TextField("Syötä premium pesun aika");
+
+            vahausAikaLabel = new Label("Vahausaika (min):");
+            vahausAika = new TextField("Syötä vahausaika");
+
+            kuivausAikaLabel = new Label("Kuivausaika (min):");
+            kuivausAika = new TextField("Syötä kuivausaika");
+
+            tulosLabel = new Label("KOKONAISAIKA:");
+            tulosLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 16));
             tulos = new Label();
-            tulos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            tulos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
             tulos.setPrefWidth(150);
 
             virheLabel = new Label();
+            virheLabel.setTextFill(Color.RED);
+            virheLabel.setFont(Font.font("Tahoma", FontWeight.BOLD,12));
 
             HBox hBox = new HBox();
             hBox.setPadding(new Insets(15, 12, 15, 12)); // marginaalit ylÃ¤, oikea, ala, vasen
@@ -161,35 +164,61 @@ public class SimulaattorinGUI extends Application implements ISimulaattorinUI {
             grid.setVgap(10);
             grid.setHgap(5);
 
-            grid.add(aikaLabel, 0, 0);   // sarake, rivi
-            grid.add(aika, 1, 0);          // sarake, rivi
-            grid.add(viiveLabel, 0, 1);      // sarake, rivi
-            grid.add(viive, 1, 1);           // sarake, rivi
-            grid.add(saapumisvaliLabel, 0, 2);
-            grid.add(saapumisvali, 1, 2);
-            grid.add(palvelupisteAikaLabel, 0, 3);
-            grid.add(palvelupisteAika, 1, 3);
-            grid.add(basicAikaLabel, 0, 4);
-            grid.add(basicAika, 1, 4);
-            grid.add(premiumAikaLabel, 0, 5);
-            grid.add(premiumAika, 1, 5);
-            grid.add(vahausAikaLabel, 0, 6);
-            grid.add(vahausAika, 1, 6);
-            grid.add(kuivausAikaLabel, 0, 7);
-            grid.add(kuivausAika, 1, 7);
-            grid.add(premiumOsuusLabel, 0, 8);
-            grid.add(premiumOsuus, 1, 8);
-            grid.add(tulosLabel, 0, 9);      // sarake, rivi
-            grid.add(tulos, 1, 9);           // sarake, rivi
-            grid.add(kaynnistaButton, 0, 10);  // sarake, rivi
-            grid.add(nopeutaButton, 0, 11);   // sarake, rivi
-            grid.add(hidastaButton, 1, 11);   // sarake, rivi
-            grid.add(virheLabel, 0, 12, 2, 1);
+            grid.add(asetuksetOtsikko, 0, 0, 2, 1);
+
+            grid.add(aikaLabel, 0, 1);   // sarake, rivi
+            grid.add(aika, 1, 1);          // sarake, rivi
+
+            grid.add(viiveLabel, 0, 2);      // sarake, rivi
+            grid.add(viive, 1, 2);           // sarake, rivi
+
+            grid.add(saapumisvaliLabel, 0, 3);
+            grid.add(saapumisvali, 1, 3);
+
+            grid.add(premiumOsuusLabel, 0, 4);
+            grid.add(premiumOsuus, 1, 4);
+
+            grid.add(palvelupisteOtsikko, 0, 5, 2, 1);
+
+            grid.add(palvelupisteAikaLabel, 0, 6);
+            grid.add(palvelupisteAika, 1, 6);
+
+            grid.add(basicAikaLabel, 0, 7);
+            grid.add(basicAika, 1, 7);
+
+            grid.add(premiumAikaLabel, 0, 8);
+            grid.add(premiumAika, 1, 8);
+
+            grid.add(vahausAikaLabel, 0, 9);
+            grid.add(vahausAika, 1, 9);
+
+            grid.add(kuivausAikaLabel, 0, 10);
+            grid.add(kuivausAika, 1, 10);
+
+            grid.add(tulosLabel, 0, 12);      // sarake, rivi
+            grid.add(tulos, 1, 12);           // sarake, rivi
+
+            grid.add(virheLabel, 0, 13, 2, 1);
 
             naytto = new Visualisointi(600, 300);
 
+            BorderPane canvasReunus = new BorderPane();
+            canvasReunus.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+            canvasReunus.setCenter((Canvas) naytto);
+
+            HBox napit = new HBox(40);
+            napit.setAlignment(Pos.CENTER);
+            napit.getChildren().addAll(nopeutaButton, hidastaButton);
+
+            Label autopesulaOtsikko = new Label("AUTOPESULA");
+            autopesulaOtsikko.setFont(Font.font("Tahoma", FontWeight.BOLD, 16));
+
+            VBox oikeapuoli = new VBox(20);
+            oikeapuoli.setAlignment(Pos.CENTER);
+            oikeapuoli.getChildren().addAll(autopesulaOtsikko, canvasReunus, kaynnistaButton, napit);
+
             // TÃ¤ytetÃ¤Ã¤n boxi:
-            hBox.getChildren().addAll(grid, (Canvas) naytto);
+            hBox.getChildren().addAll(grid, oikeapuoli);
 
             Scene scene = new Scene(hBox);
             primaryStage.setScene(scene);

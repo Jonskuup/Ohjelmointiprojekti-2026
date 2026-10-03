@@ -28,7 +28,7 @@ public class Visualisointi extends Canvas implements IVisualisointi{
 
 	public void tyhjennaNaytto() {
 
-		gc.setFill(Color.LIGHTGREY);
+		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		//saapuminen
