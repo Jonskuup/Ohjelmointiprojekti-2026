@@ -5,6 +5,6 @@ public interface IKontrolleriForM {
     // Rajapinta, joka tarjotaan moottorille:
 
     public void naytaLoppuaika(double aika);
-    public void visualisoiAsiakas();
+    public void visualisoiAsiakas(String vaihe);
     public void naytaLoppuraportti(String raportti);
 }
