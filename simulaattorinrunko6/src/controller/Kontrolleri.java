@@ -31,7 +31,6 @@ public class Kontrolleri implements IKontrolleriForM, IKontrolleriForV{   // UUS
 		moottori = new OmaMoottori(this, saapumisvali, palvelupisteAika, basicAika, premiumAika, vahausAika, kuivausAika, premiumOsuus); // luodaan uusi moottorisäie jokaista simulointia varten
 		moottori.setSimulointiaika(ui.getAika());
 		moottori.setViive(ui.getViive());
-		ui.getVisualisointi().tyhjennaNaytto();
 		((Thread)moottori).start();
 		//((Thread)moottori).run(); // Ei missään tapauksessa näin. Miksi?
 		// Koska run() suoritetaan nykyisessä säikeessä eikä synny uutta, mutta start() luo uuden säikeen ja suorittaa siinä run() metodin.
