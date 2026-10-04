@@ -64,7 +64,12 @@ public class Asiakas {
 		return pesuTyyppi == PesuTyyppi.PREMIUM;
 	}
 
-	// Asiakas voi vaihtaa premium todennäköisyyttä
+	/**
+	 * 	premium pesun todennäköisyyden asettaminen
+	 *
+	 * @param premiumOsuus premium pesun osuus
+	 * @param seed satunnaislukugeneraattorin seed
+ 	 */
 	public static void setPremiumOsuus(double premiumOsuus, long seed) {
 		pesuvalintaGeneraattori = new Bernoulli(premiumOsuus, seed);
 	}
@@ -95,7 +100,9 @@ public class Asiakas {
 		return lapimenoaikojenSUmma / valmistuneetAsiakkaat;
 	}
 
-	// nollaa asiakkaiden yhteiset tilastot uutta simulointia varten
+	/**
+	 * 	Nollaa asiakkaiden yhteiset tilastot uutta simulointia varten.
+ 	 */
 	public static void nollaaTilastot() {
 		lapimenoaikojenSUmma = 0;
 		valmistuneetAsiakkaat = 0;

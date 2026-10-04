@@ -10,19 +10,59 @@ import entity.AjonPalvelupiste;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Autopesula simun oma moottori.
+ * Tää osa vastaa simulaation palvelupisteistä, tapahtumista ja miten asiakas liikkuu eri vaiheiden läpi.
+ */
 public class OmaMoottori extends Moottori{
-	
+
+	/**
+	 * Simun saapumisprosessi
+	 */
 	private Saapumisprosessi saapumisprosessi;
 
+	/**
+	 * Autopesulan palvelupisteet.
+	 */
 	private Palvelupiste[] palvelupisteet;
 
+	/**
+	 * Asiakkaiden keskimääräinen saapumisväli.
+	 */
 	private double saapumisvali;
+
+	/**
+	 * Premium pesun osuus kaikista asiakkaista.
+	 */
 	private double premiumOsuus;
+
+	/**
+	 * Palvelupisteiden palveluaikojen keskiarvo.
+	 */
 	private double [] palveluaikojenKa;
+
+	/**
+	 * palvelupisteiden palveluaikojen hajonta.
+	 */
 	private double[] palveluajatHajonta = {6, 10, 3, 6, 6};
 
+	/**
+	 * Satunnaisgeneraattoreissa käytettävä seed.
+	 */
 	private final long seed = 5;
 
+	/**
+	 * Luo moottorin ja alustaa palvelupisteet.
+	 *
+	 * @param kontrolleri simulaation kontrolleri
+	 * @param saapumisvali asiakkaiden saapumisväli
+	 * @param palvelupisteAika palvelupisteen palveluaika
+	 * @param basicAika basic pesun palveluaika
+	 * @param premiumAika premium pesun palveluaika
+	 * @param vahausAika vahauksen palveluaika
+	 * @param kuivausAika kuivauksen palveluaika
+	 * @param premiumOsuus premium pesun asiakas osuus
+	 */
 	public OmaMoottori(IKontrolleriForM kontrolleri, double saapumisvali, double palvelupisteAika, double basicAika, double premiumAika, double vahausAika, double kuivausAika, double premiumOsuus) {
 
 		super(kontrolleri);
@@ -47,11 +87,19 @@ public class OmaMoottori extends Moottori{
 		this.palveluaikojenKa = new double[]{palvelupisteAika, basicAika, premiumAika, vahausAika, kuivausAika};
 	}
 
+	/**
+	 * Alustaa simulaation generoimalla ekan saapumistapahtuman
+	 */
 	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
 	}
 
+	/**
+	 * Suorittaa B-vaiheen tapahtuman ja ohjaa sit seuraavaan vaiheeseen.
+	 *
+	 * @param t suoritettava tapahtuma
+	 */
 	@Override
 	protected void suoritaTapahtuma(Tapahtuma t){  // B-vaiheen tapahtumat
 
@@ -209,5 +257,5 @@ public class OmaMoottori extends Moottori{
 
 	}
 
-	
+
 }
