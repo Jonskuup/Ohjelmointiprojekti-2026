@@ -12,56 +12,62 @@ import java.util.List;
 
 /**
  * Autopesula simun oma moottori.
- * Tää osa vastaa simulaation palvelupisteistä, tapahtumista ja miten asiakas liikkuu eri vaiheiden läpi.
+ * Täällä luodaan pesulan palvelupisteet ja päätetään missä järjestyksessä asiakas liikkuu niiden läpi.
+ *
+ * Basic asiakas menee: palvelupiste -> basic pesu -> kuivaus.
+ * Premium asiakas menee: palvelupiste -> premium pesu -> vahaus -> kuivaus.
  */
 public class OmaMoottori extends Moottori{
 
 	/**
-	 * Simun saapumisprosessi
+	 * Uusia asiakkaita luodaan käyttäjän antaman saapumisvälin mukaan.
 	 */
 	private Saapumisprosessi saapumisprosessi;
 
 	/**
-	 * Autopesulan palvelupisteet.
+	 * Taulukko, jossa on autopesulan viisi palvelupistettä.
 	 */
 	private Palvelupiste[] palvelupisteet;
 
 	/**
-	 * Asiakkaiden keskimääräinen saapumisväli.
+	 * Kuinka usein uusia asiakkaita saapuu pesulaan.
 	 */
 	private double saapumisvali;
 
 	/**
-	 * Premium pesun osuus kaikista asiakkaista.
+	 * Kuinka suuri asiakkaista valitsee premium pesun.
+	 * Esim. 0.4 tarkottaa, että premium mahdollisuus on 40%.
 	 */
 	private double premiumOsuus;
 
 	/**
-	 * Palvelupisteiden palveluaikojen keskiarvo.
+	 * Täällä säilytetään käyttäjän antamat palveluajat jokaiselle palvelupisteelle.
 	 */
 	private double [] palveluaikojenKa;
 
 	/**
-	 * palvelupisteiden palveluaikojen hajonta.
+	 * Palveluaikoihin käytettävät hajonnat.
+	 * Jokasella palvelupisteellä on oma arvo.
 	 */
 	private double[] palveluajatHajonta = {6, 10, 3, 6, 6};
 
 	/**
-	 * Satunnaisgeneraattoreissa käytettävä seed.
+	 * Seed pitää satunnaisuuden samana, jos simulaatio ajetaan samoilla arvoilla uudestaan.
 	 */
 	private final long seed = 5;
 
 	/**
-	 * Luo moottorin ja alustaa palvelupisteet.
+	 * Luo uuden simun käyttäjän antamilla arvoilla.
+	 * Täällä luodaan ne kaikki viisi palvelupistettä, asiakkaiden saapumisprosessi ja kans premium pesun osuus.
 	 *
-	 * @param kontrolleri simulaation kontrolleri
-	 * @param saapumisvali asiakkaiden saapumisväli
-	 * @param palvelupisteAika palvelupisteen palveluaika
+	 * @param kontrolleri yhdistää moottorin käyttöliittymään
+	 * @param saapumisvali kuinka usein uusia asiakkaita saapuu
+	 * @param palvelupisteAika ekan palvelupisteen palveluaika
 	 * @param basicAika basic pesun palveluaika
 	 * @param premiumAika premium pesun palveluaika
 	 * @param vahausAika vahauksen palveluaika
 	 * @param kuivausAika kuivauksen palveluaika
-	 * @param premiumOsuus premium pesun asiakas osuus
+	 * @param premiumOsuus kuinka suuri osa autoista valitsee premium pesun
 	 */
 	public OmaMoottori(IKontrolleriForM kontrolleri, double saapumisvali, double palvelupisteAika, double basicAika, double premiumAika, double vahausAika, double kuivausAika, double premiumOsuus) {
 
@@ -88,7 +94,7 @@ public class OmaMoottori extends Moottori{
 	}
 
 	/**
-	 * Alustaa simulaation generoimalla ekan saapumistapahtuman
+	 * Alottaa simulaation luomalla ekan asiakkaan saapumistapahtuman.
 	 */
 	@Override
 	protected void alustukset() {
@@ -96,7 +102,11 @@ public class OmaMoottori extends Moottori{
 	}
 
 	/**
-	 * Suorittaa B-vaiheen tapahtuman ja ohjaa sit seuraavaan vaiheeseen.
+	 * Käsittelee simulaation tapahtumat.
+	 * Kun asiakas saapuu tai valmistuu jostain palvelupisteessä niin täällä päätetään mihin palvelupisteeseen asiakas menee seuraavaksi.
+	 *
+	 * Basic asiakas menee basic pesusta kuivaukseen.
+	 * Premium asiakas menee premium pesusta vahaukseen ja siite sen jälkeen kuivaukseen.
 	 *
 	 * @param t suoritettava tapahtuma
 	 */
@@ -143,6 +153,9 @@ public class OmaMoottori extends Moottori{
 		}
 	}
 
+	/**
+	 * Käy palvelupisteet läpi ja alottaa palvelun, jos palvelupiste on vapaa ja sinne on asiakas jonossa.
+	 */
 	@Override
 	protected void yritaCTapahtumat(){
 		for (Palvelupiste p: palvelupisteet){

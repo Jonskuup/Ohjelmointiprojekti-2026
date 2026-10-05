@@ -1,6 +1,8 @@
 package simu.model;
 
 import org.junit.jupiter.api.*;
+import simu.framework.Trace;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AsiakasTest {
@@ -12,11 +14,12 @@ class AsiakasTest {
         assertEquals(0, Asiakas.getKeskimaarainenLapimenoaika());
     }
 
-//    Kokeilin premium osuuden tastausta, mutta Asiakas olion luonnissa Trace näytti null
-//    @Test
-//    void premiumOsuus() {
-//        Asiakas.setPremiumOsuus(1.0, 5);
-//        Asiakas asiakas = new Asiakas();
-//        assertEquals(Asiakas.PesuTyyppi.PREMIUM, asiakas.getPesuTyyppi());
-//    }
+    // Testaus kun premium osuus on 100% että asiakas valitsee oikeasti premium pesun
+    @Test
+    void premiumOsuus() {
+        Trace.setTraceLevel(Trace.Level.INFO);
+        Asiakas.setPremiumOsuus(1.0, 5);
+        Asiakas asiakas = new Asiakas();
+        assertEquals(Asiakas.PesuTyyppi.PREMIUM, asiakas.getPesuTyyppi());
+    }
 }
