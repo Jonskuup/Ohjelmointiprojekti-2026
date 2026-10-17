@@ -9,6 +9,29 @@ import simu.framework.ITapahtumanTyyppi;
  * ja se on valmis siirtymään seuraavaan vaiheeseen.
  */
 public enum TapahtumanTyyppi implements ITapahtumanTyyppi{
-	ARR1, PALVELUPISTE_VALMIS, BASIC_VALMIS, PREMIUM_VALMIS, VAHAUS_VALMIS, KUIVAUS_VALMIS;
+	/**
+	 * Asiakas saapuu simulaatioon.
+	 */
+	ARR1,
+	/**
+	 * Palvelupisteen palvelu valmistuu.
+	 */
+	PALVELUPISTE_VALMIS,
+	/**
+	 * Basic pesu valmistuu.
+	 */
+	BASIC_VALMIS,
+	/**
+	 * Premium pesu valmistuu.
+	 */
+	PREMIUM_VALMIS,
+	/**
+	 * Vahaus valmistuu.
+	 */
+	VAHAUS_VALMIS,
+	/**
+	 * Kuivaus valmistuu.
+	 */
+	KUIVAUS_VALMIS;
 
 }

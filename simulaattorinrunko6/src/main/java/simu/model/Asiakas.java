@@ -19,7 +19,13 @@ public class Asiakas {
 	 * Asiakkaan pesutyyppi, joka on joko basic tai premium.
 	 */
 	public enum PesuTyyppi{
+		/**
+		 * Peruspesu
+		 */
 		BASIC,
+		/**
+		 * Premiumpesu
+		 */
 		PREMIUM
 	}
 
