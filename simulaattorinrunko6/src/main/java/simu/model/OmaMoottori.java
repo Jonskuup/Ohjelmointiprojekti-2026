@@ -165,6 +165,17 @@ public class OmaMoottori extends Moottori{
 		}
 	}
 
+	/**
+	 * Kerää ja näyttää simulaation lopulliset tulokset.
+	 *
+	 * TÄssä käydään kaikki palvelupisteet läpi ja kerätään niistä esim. palveltujen autojen määrä, aktiivinen aika ja maksimijonon pituus.
+	 * Lisäks katotaan valmistuneiden asiakkaiden määrä ja keskimääränen läpimenoaika.
+	 *
+	 * Tuloksista selvii myös kuinka monta asiakasta jäi vielä kesken palvelun kun simulaatio päättyy ja mille palvelupisteelle muodostuu suurin jono.
+	 * Suurin jono on raportissa pullonkaula.
+	 *
+	 * Näistä tiedoista muodostuu käyttäjälle loppuraportti, joka näkyy käyttöliittymässä ja tiedot + tulokset tallennetaan tietokantaan.
+	 */
 	@Override
 	protected void tulokset() {
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
